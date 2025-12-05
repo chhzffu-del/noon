@@ -1,6 +1,2 @@
 python-telegram-bot
-opencv-python-headless
-numpy
-scikit-image
-rawpy
-imageio
+replicate
