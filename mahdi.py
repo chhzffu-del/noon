@@ -1,57 +1,74 @@
 import telegram
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
-import replicate
+import requests
 import os
 import time
 from flask import Flask
 import threading
 
 # ==============================================================================
-# --- الإعدادات (سيتم ملؤها من متغيرات البيئة) ---
+# --- الإعدادات الثابتة ---
 # ==============================================================================
 
-TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
-REPLICATE_API_TOKEN = os.environ.get("REPLICATE_API_TOKEN")
-ADMIN_CHAT_ID_STR = os.environ.get("ADMIN_CHAT_ID")
-ADMIN_CHAT_ID = int(ADMIN_CHAT_ID_STR) if ADMIN_CHAT_ID_STR else None
-VIDEO_MODEL = "anotherjesse/zeroscope-v2-xl:9f747673945c62801b13b84701c783929c0ee784e4748ec062204894dda1a351"
+# تم دمج كل شيء هنا لسهولة النشر
+TELEGRAM_BOT_TOKEN = "1936058114:AAHm19u1R6lv_vShGio-MIo4Z0rjVUoew_U"
+SEGMIND_API_KEY = "SG_047ed0e22f564d48"
+ADMIN_CHAT_ID = 1148797883
 
 # ==============================================================================
 # --- الخادم الوهمي لإبقاء Render سعيداً ---
 # ==============================================================================
 
 app = Flask(__name__)
-
 @app.route('/')
 def hello_world():
     return 'Bot is alive!'
 
 def run_flask_app():
-    # Render يبحث عن منفذ 10000 بشكل افتراضي
     app.run(host='0.0.0.0', port=10000)
 
 # ==============================================================================
 # --- (لا تقم بتعديل أي شيء تحت هذا الخط) ---
 # ==============================================================================
 
-def create_video(prompt: str) -> str:
+def create_video_segmind(prompt: str) -> bytes:
+    """
+    يتواصل مع Segmind API لإنشاء الفيديو.
+    """
+    url = "https://api.segmind.com/v1/sd-svd"
+    headers = {'x-api-key': SEGMIND_API_KEY}
+    data = {
+        "prompt": prompt,
+        "size": "1024x576",
+        "num_inference_steps": 25,
+        "base64": False
+    }
+    
     try:
-        print(f"🎬 جاري إرسال الطلب إلى Replicate لإنشاء فيديو من النص: '{prompt}'")
-        output = replicate.run(
-            VIDEO_MODEL,
-            input={"prompt": prompt}
-        )
-        video_url = output[0]
-        print(f"✅ تم استلام رابط الفيديو من Replicate: {video_url}")
-        return video_url
+        print(f"🎬 جاري إرسال الطلب إلى Segmind لإنشاء فيديو من النص: '{prompt}'")
+        # زيادة مهلة الانتظار إلى 3 دقائق (180 ثانية)
+        response = requests.post(url, json=data, headers=headers, timeout=180)
+        
+        if response.status_code == 200:
+            video_content = response.content
+            print("✅ Segmind - تم استلام الفيديو بنجاح.")
+            return video_content
+        else:
+            error_message = response.text # استخدام .text للحصول على تفاصيل الخطأ
+            print(f"❌ Segmind - حدث خطأ: {response.status_code} - {error_message}")
+            return None
+
+    except requests.exceptions.Timeout:
+        print("❌ Segmind - انتهت مهلة الانتظار (Timeout). استغرقت العملية وقتاً طويلاً جداً.")
+        return "timeout"
     except Exception as e:
-        print(f"❌ حدث خطأ أثناء التواصل مع Replicate: {e}")
+        print(f"❌ حدث خطأ فادح أثناء التواصل مع Segmind: {e}")
         return None
 
 async def start_command(update, context):
     user_id = update.message.from_user.id
     if user_id == ADMIN_CHAT_ID:
-        await update.message.reply_text("مرحباً سيدي مهدي. أنا بوت الفيديو الاحترافي. أرسل لي نصاً وسأحوله إلى فيديو باستخدام Replicate.")
+        await update.message.reply_text("مرحباً سيدي مهدي. أنا بوت الفيديو (إصدار Segmind). أرسل لي نصاً وسأحوله إلى فيديو.")
 
 async def handle_message(update, context):
     user_id = update.message.from_user.id
@@ -59,25 +76,22 @@ async def handle_message(update, context):
         return
 
     prompt = update.message.text
-    await update.message.reply_text("⏳ تم استلام طلبك. قد تستغرق عملية إنشاء الفيديو عدة دقائق. من فضلك انتظر...")
+    await update.message.reply_text("⏳ تم استلام طلبك (Segmind). قد تستغرق العملية دقيقة أو دقيقتين. من فضلك انتظر...")
 
-    video_url = create_video(prompt)
+    video_content = create_video_segmind(prompt)
 
-    if video_url:
+    if video_content and video_content != "timeout":
         await update.message.reply_video(
-            video=video_url,
-            caption=f"✅ تم إنشاء الفيديو بنجاح!\n\nالنص الأصلي: {prompt}"
+            video=video_content,
+            caption=f"✅ (Segmind) تم إنشاء الفيديو بنجاح!\n\nالنص الأصلي: {prompt}"
         )
+    elif video_content == "timeout":
+        await update.message.reply_text("❌ عذراً، استغرقت العملية وقتاً طويلاً جداً وتجاوزت مهلة الانتظار. قد تكون خوادم Segmind مشغولة. يرجى المحاولة مرة أخرى لاحقاً.")
     else:
-        await update.message.reply_text("❌ عذراً، حدث خطأ أثناء إنشاء الفيديو. يرجى المحاولة مرة أخرى لاحقاً.")
+        await update.message.reply_text("❌ عذراً، حدث خطأ أثناء إنشاء الفيديو. يرجى التحقق من سجلات Render.")
 
 def run_bot():
-    if not all([TELEGRAM_BOT_TOKEN, REPLICATE_API_TOKEN, ADMIN_CHAT_ID]):
-        print("❌ خطأ فادح: بعض متغيرات البيئة مفقودة.")
-        return
-
-    print("🚀 جاري تشغيل بوت الفيديو الاحترافي...")
-    os.environ["REPLICATE_API_TOKEN"] = REPLICATE_API_TOKEN
+    print("🚀 جاري تشغيل بوت الفيديو (إصدار Segmind)...")
     application = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
     application.add_handler(CommandHandler('start', start_command))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
@@ -86,11 +100,8 @@ def run_bot():
 
 # --- التشغيل الرئيسي ---
 if __name__ == "__main__":
-    # تشغيل خادم Flask في خيط منفصل
     flask_thread = threading.Thread(target=run_flask_app)
     flask_thread.daemon = True
     flask_thread.start()
     print("🌐 الخادم الوهمي يعمل في الخلفية لإبقاء الخدمة حية.")
-
-    # تشغيل البوت في الخيط الرئيسي
     run_bot()
