@@ -11,7 +11,7 @@ import threading
 # ==============================================================================
 
 # تم دمج كل شيء هنا لسهولة النشر
-TELEGRAM_BOT_TOKEN = "1936058114:AAHm19u1R6lv_vShGio-MIo4Z0rjVUoew_U"
+TELEGRAM_BOT_TOKEN = "5235296383:AAHDIcr6f_z1KANLITw2_sEb4Ky8dlihsiI"
 SEGMIND_API_KEY = "SG_047ed0e22f564d48"
 ADMIN_CHAT_ID = 1148797883
 
