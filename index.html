@@ -3,260 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر الألعاب الرقمي</title>
-    <style>
-        :root {
-            --primary-color: #007bff;
-            --secondary-color: #28a745;
-            --background-color: #121212;
-            --card-background: #1e1e1e;
-            --text-color: #e0e0e0;
-            --header-text-color: #ffffff;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            text-align: center;
-        }
-        header {
-            background-color: var(--card-background);
-            padding: 20px;
-            border-bottom: 4px solid var(--primary-color);
-        }
-        header h1 {
-            margin: 0;
-            color: var(--header-text-color);
-            font-size: 2em;
-        }
-        .container {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .section-title {
-            font-size: 1.8em;
-            color: var(--primary-color);
-            margin-top: 40px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
-            display: inline-block;
-        }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-        }
-        .product-card {
-            background-color: var(--card-background);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: transform 0.2s ease-in-out;
-            border: 1px solid #333;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .product-card:hover {
-            transform: scale(1.05);
-        }
-        .product-card img {
-            max-width: 80px;
-            height: auto;
-            margin: 0 auto 15px auto;
-        }
-        .product-card h3 {
-            margin: 10px 0;
-            color: var(--header-text-color);
-            font-size: 1.3em;
-            flex-grow: 1;
-        }
-        .product-card .price {
-            font-size: 1.6em;
-            color: var(--secondary-color);
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .buy-button {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 1.1em;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: opacity 0.3s;
-            font-weight: bold;
-        }
-        .buy-button:hover {
-            opacity: 0.9;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.8);
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-        }
-        .modal-content {
-            background-color: #2a2a2a;
-            margin: auto;
-            padding: 25px;
-            border: 1px solid var(--primary-color);
-            width: 95%;
-            max-width: 500px;
-            border-radius: 15px;
-            text-align: center;
-            position: relative;
-        }
-        .close-button {
-            color: #aaa;
-            position: absolute;
-            left: 15px;
-            top: 5px;
-            font-size: 35px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .modal-content h2 {
-            color: var(--primary-color);
-            margin-top: 0;
-        }
-        .modal-step {
-            margin-bottom: 15px;
-            text-align: right;
-            padding: 15px;
-            background-color: #1e1e1e;
-            border-radius: 10px;
-        }
-        .modal-step h3 {
-            color: var(--secondary-color);
-            margin-top: 0;
-            font-size: 1.2em;
-        }
-        .transaction-id {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #fff;
-            background-color: #000;
-            padding: 8px 12px;
-            border-radius: 5px;
-            display: inline-block;
-            letter-spacing: 1px;
-            margin-top: 5px;
-            border: 1px dashed var(--primary-color);
-        }
-        .payment-link {
-            display: block;
-            color: white;
-            padding: 12px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 1.1em;
-            margin-top: 10px;
-            font-weight: bold;
-            text-align: center;
-        }
-        .libyana-link { background-color: #e6007e; }
-        .almadar-link { background-color: #00a859; }
-        .whatsapp-link { background-color: #25D366; }
-    </style>
+    <title>متجر الشدات - شحن فوري وآمن</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Readex+Pro:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <header>
-        <h1>متجر الألعاب الرقمي</h1>
+        <div class="container">
+            <div class="logo">YallaHub</div>
+            <nav>
+                <a href="#">الرئيسية</a>
+                <a href="#">حسابي</a>
+                <a href="#">تتبع الطلب</a>
+            </nav>
+        </div>
     </header>
 
-    <div class="container">
-        <h2 class="section-title">شحن ببجي موبايل</h2>
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="https://i.imgur.com/Q2gL5QW.png" alt="PUBG UC">
-                <h3>660 UC</h3>
-                <div class="price">50 د.ل</div>
-                <button class="buy-button" onclick="showModal('660 UC ببجي', 50, '0920000000', '0910000000')">اشترِ الآن</button>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>اشحن عالمك. سيطر على المعركة.</h1>
+                <p>شحن فوري وآمن لجميع ألعابك المفضلة بأسعار تتحدث كل يوم.</p>
             </div>
-            <div class="product-card">
-                <img src="https://i.imgur.com/Q2gL5QW.png" alt="PUBG UC">
-                <h3>1800 UC</h3>
-                <div class="price">125 د.ل</div>
-                <button class="buy-button" onclick="showModal('1800 UC ببجي', 125, '0920000000', '0910000000')">اشترِ الآن</button>
+        </section>
+
+        <section class="game-selection">
+            <div class="container">
+                <h2>اختر اللعبة التي تريد شحنها</h2>
+                <div class="game-cards">
+                    
+                    <!-- بطاقة ببجي موبايل -->
+                    <a href="#" class="game-card pubg">
+                        <div class="game-logo-container">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/9/9f/New_PUBG_Mobile_Logo.png" alt="PUBG Mobile Logo">
+                        </div>
+                        <h3>PUBG Mobile</h3>
+                        <p>شحن شدات (UC)</p>
+                    </a>
+
+                    <!-- بطاقة يلا لودو -->
+                    <a href="#" class="game-card yalla">
+                        <div class="game-logo-container">
+                            <img src="https://img.utdstc.com/icon/def8c755859a4c43ed68a16b354968a3617425f329944983d64853538172381f:200" alt="Yalla Ludo Logo">
+                        </div>
+                        <h3>Yalla Ludo</h3>
+                        <p>شحن ألماس (Diamonds)</p>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="feature">
+                    <div class="icon">⚡</div>
+                    <h3>شحن فوري</h3>
+                    <p>تتم معالجة طلبك في دقائق معدودة.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">🛡️</div>
+                    <h3>دفع آمن</h3>
+                    <p>ادفع بأمان عبر وسائل الدفع المحلية.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">🎁</div>
+                    <h3>اكسب مكافآت</h3>
+                    <p>اجمع نقاط الولاء مع كل عملية شراء.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 YallaHub. جميع الحقوق محفوظة.</p>
+            <div class="exchange-rate">
+                <span>سعر الصرف المعتمد: 1$ = 5.20 د.ل</span>
             </div>
         </div>
-
-        <h2 class="section-title">شحن يلا لودو</h2>
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="https://i.imgur.com/eYf1b2F.png" alt="Yalla Ludo">
-                <h3>25,000 جوهرة</h3>
-                <div class="price">45 د.ل</div>
-                <button class="buy-button" onclick="showModal('25,000 جوهرة يلا لودو', 45, '0920000000', '0910000000')">اشترِ الآن</button>
-            </div>
-            <div class="product-card">
-                <img src="https://i.imgur.com/eYf1b2F.png" alt="Yalla Ludo">
-                <h3>70,000 جوهرة</h3>
-                <div class="price">110 د.ل</div>
-                <button class="buy-button" onclick="showModal('70,000 جوهرة يلا لودو', 110, '0920000000', '0910000000')">اشترِ الآن</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="paymentModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal()">&times;</span>
-            <h2 id="modal-product-name"></h2>
-            <div class="modal-step">
-                <h3>الخطوة 1: تحويل الرصيد</h3>
-                <p>اضغط على الزر المناسب لتحويل مبلغ <b id="modal-price"></b>.</p>
-                <a id="libyana-payment-link" href="#" class="payment-link libyana-link" target="_blank">ادفع عبر رصيد ليبيانا</a>
-                <a id="almadar-payment-link" href="#" class="payment-link almadar-link" target="_blank">ادفع عبر رصيد المدار</a>
-            </div>
-            <div class="modal-step">
-                <h3>الخطوة 2: تأكيد المعاملة</h3>
-                <p>بعد التحويل، أرسل **معرف المعاملة** هذا عبر واتساب:</p>
-                <div id="modal-transaction-id" class="transaction-id"></div>
-                <a id="whatsapp-link" href="#" class="payment-link whatsapp-link" target="_blank">إرسال معرف المعاملة عبر واتساب</a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const modal = document.getElementById('paymentModal');
-        function showModal(productName, price, libyanaNumber, almadarNumber) {
-            const transactionId = 'TX-' + Math.random().toString(36).substr(2, 6).toUpperCase();
-            document.getElementById('modal-product-name').innerText = `شراء: ${productName}`;
-            document.getElementById('modal-price').innerText = `${price} د.ل`;
-            document.getElementById('modal-transaction-id').innerText = transactionId;
-            const amountInDirhams = price * 1000;
-            const yourWhatsappNumber = '218000000000'; //  <-- ضع رقم واتساب الخاص بك هنا
-            const libyanaCode = `*122*${libyanaNumber}*${amountInDirhams}*1%23`;
-            document.getElementById('libyana-payment-link').href = `tel:${libyanaCode}`;
-            const almadarCode = `*140*${almadarNumber}*${price}%23`; // <-- تأكد من كود المدار الصحيح
-            document.getElementById('almadar-payment-link').href = `tel:${almadarCode}`;
-            const whatsappMessage = `أهلاً، لقد قمت بدفع ثمن معاملة. معرف المعاملة هو: ${transactionId}`;
-            document.getElementById('whatsapp-link').href = `https://wa.me/${yourWhatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-            modal.style.display = 'flex';
-        }
-        function closeModal() {
-            modal.style.display = 'none';
-        }
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-    </script>
+    </footer>
 
 </body>
 </html>
