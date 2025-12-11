@@ -1,0 +1,209 @@
+/* --- الإعدادات العامة --- */
+:root {
+    --primary-color: #2D3A6C; /* أزرق داكن */
+    --accent-color: #39FF14;  /* أخضر نيون */
+    --text-color: #F5F5F5;     /* أبيض مائل للرمادي */
+    --dark-bg: #1A2035;       /* خلفية أغمق قليلاً */
+    --font-headings: 'Cairo', sans-serif;
+    --font-body: 'Readex Pro', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--dark-bg);
+    color: var(--text-color);
+    line-height: 1.6;
+    text-align: right; /* For RTL */
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-headings);
+    font-weight: 700;
+}
+
+/* --- الهيدر --- */
+header {
+    background-color: rgba(45, 58, 108, 0.5);
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--font-headings);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+header nav a {
+    color: var(--text-color);
+    margin-right: 20px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: var(--accent-color);
+}
+
+/* --- قسم الهيرو --- */
+.hero {
+    background: linear-gradient(rgba(45, 58, 108, 0.8), rgba(26, 32, 53, 0.9)), url('https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?q=80&w=2069&auto=format&fit=crop') no-repeat center center/cover;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+}
+
+/* --- قسم اختيار اللعبة --- */
+.game-selection {
+    padding: 60px 0;
+    text-align: center;
+}
+
+.game-selection h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+.game-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.game-card {
+    background-color: var(--primary-color);
+    border-radius: 15px;
+    padding: 30px;
+    width: 300px;
+    text-align: center;
+    border: 2px solid transparent;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.game-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent-color);
+    box-shadow: 0 10px 30px rgba(57, 255, 20, 0.2);
+}
+
+.game-logo-container {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-logo-container img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.game-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.game-card p {
+    font-size: 1rem;
+    color: #aaa;
+}
+
+/* --- قسم الميزات --- */
+.features {
+    background-color: var(--dark-bg);
+    padding: 60px 0;
+}
+
+.features .container {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.feature {
+    max-width: 300px;
+}
+
+.feature .icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.feature h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* --- الفوتر --- */
+footer {
+    background-color: #111522;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid rgba(57, 255, 20, 0.1);
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.exchange-rate span {
+    background-color: rgba(57, 255, 20, 0.1);
+    color: var(--accent-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
