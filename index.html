@@ -1,13 +1,42 @@
+<?php
+// --- بيانات وهمية لمحاكاة قاعدة البيانات ---
+// هذه البيانات ستأتي من قاعدة البيانات في المستقبل
+$dollar_exchange_rate = 5.20; // يتم تحديثه من البوت
+$cash_to_credit_markup = 0.25; // 25% فرق الرصيد
+$my_profit_margin = 0.15; // 15% ربحك الصافي
+
+// قائمة باقات ببجي (التكلفة عليك بالدولار)
+$pubg_packages = [
+    ["name" => "60 UC", "cost" => 0.99],
+    ["name" => "325 UC", "cost" => 4.99],
+    ["name" => "660 UC", "cost" => 9.99],
+];
+
+// قائمة باقات يلا لودو (التكلفة عليك بالدولار)
+$yalla_packages = [
+    ["name" => "830 Diamonds", "cost" => 2.00],
+    ["name" => "2,320 Diamonds", "cost" => 5.00],
+    ["name" => "5,150 Diamonds", "cost" => 10.00],
+];
+
+// --- الدالة السحرية لحساب السعر النهائي ---
+function calculateFinalPrice($cost_usd, $rate, $credit_markup, $profit_margin) {
+    $cost_lyd = $cost_usd * $rate;
+    $cost_after_credit = $cost_lyd * (1 + $credit_markup);
+    $final_price = $cost_after_credit * (1 + $profit_margin);
+    return number_format($final_price, 2); // تقريب الرقم لخانتين عشريتين
+}
+?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر الشدات - شحن فوري وآمن</title>
+    <title>YallaHub - اشحن عالمك</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Readex+Pro:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&family=Readex+Pro:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -36,21 +65,27 @@
                 <div class="game-cards">
                     
                     <!-- بطاقة ببجي موبايل -->
-                    <a href="#" class="game-card pubg">
+                    <a href="products.php?game=pubg" class="game-card pubg">
                         <div class="game-logo-container">
-                            <img src="https://upload.wikimedia.org/wikipedia/en/9/9f/New_PUBG_Mobile_Logo.png" alt="PUBG Mobile Logo">
+                            <img src="images/pubg-logo.png" alt="PUBG Mobile Logo">
                         </div>
                         <h3>PUBG Mobile</h3>
                         <p>شحن شدات (UC)</p>
+                        <div class="starting-price">
+                            تبدأ من <span><?php echo calculateFinalPrice($pubg_packages[0]['cost'], $dollar_exchange_rate, $cash_to_credit_markup, $my_profit_margin); ?> د.ل</span>
+                        </div>
                     </a>
 
                     <!-- بطاقة يلا لودو -->
-                    <a href="#" class="game-card yalla">
+                    <a href="products.php?game=yalla" class="game-card yalla">
                         <div class="game-logo-container">
-                            <img src="https://img.utdstc.com/icon/def8c755859a4c43ed68a16b354968a3617425f329944983d64853538172381f:200" alt="Yalla Ludo Logo">
+                            <img src="images/yalla-logo.png" alt="Yalla Ludo Logo">
                         </div>
                         <h3>Yalla Ludo</h3>
                         <p>شحن ألماس (Diamonds)</p>
+                         <div class="starting-price">
+                            تبدأ من <span><?php echo calculateFinalPrice($yalla_packages[0]['cost'], $dollar_exchange_rate, $cash_to_credit_markup, $my_profit_margin); ?> د.ل</span>
+                        </div>
                     </a>
 
                 </div>
@@ -58,7 +93,7 @@
         </section>
 
         <section class="features">
-            <div class="container">
+             <div class="container">
                 <div class="feature">
                     <div class="icon">⚡</div>
                     <h3>شحن فوري</h3>
@@ -82,7 +117,8 @@
         <div class="container">
             <p>&copy; 2025 YallaHub. جميع الحقوق محفوظة.</p>
             <div class="exchange-rate">
-                <span>سعر الصرف المعتمد: 1$ = 5.20 د.ل</span>
+                <!-- هذا السعر سيتم جلبه من قاعدة البيانات -->
+                <span>سعر الصرف المعتمد: 1$ = <?php echo number_format($dollar_exchange_rate, 2); ?> د.ل</span>
             </div>
         </div>
     </footer>
